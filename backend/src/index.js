@@ -12,5 +12,6 @@ app.use("/api/auth", authRoutes)
 
 app.listen(PORT, () => {
     console.log("HI Ivan!!!, port = " + PORT);
+    console.log("HI Ivan!!!, port = " + PORT);
     connectDB()
 });
