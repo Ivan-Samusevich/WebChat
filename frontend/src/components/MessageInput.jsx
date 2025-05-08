@@ -7,14 +7,49 @@ const MessageInput = () => {
     const [text, setText] = useState("");
     const [imagePreview, setImagePreview] = useState(null);
     const fileInputRef = useRef(null);
-    const { senMessage } = useChatStore();
+    const { sendMessage } = useChatStore();
 
-    const handleImageChange = (e) => {};
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (!file.type.startsWith("image/")) {
+        toast.error("Please select an image file");
+        return;
+        }
 
-    const removeImage = () => {};
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setImagePreview(reader.result);
+        };
+        reader.readAsDataURL(file);
 
-    const handleSendMessage = async(e) => {};
-  return (
+    };
+
+    const removeImage = () => {
+        setImagePreview(null);
+        if (fileInputRef.current) fileInputRef.current.value = "";
+    };
+
+    const handleSendMessage = async(e) => {
+        e.preventDefault();
+        if (!text.trim() && !imagePreview) return;
+
+    try {
+        await sendMessage({
+        text: text.trim(),
+        image: imagePreview,
+      });
+
+      // Clear form
+        setText("");
+        setImagePreview(null);
+        if (fileInputRef.current) fileInputRef.current.value = "";
+    } catch (error) {
+        console.error("Failed to send message:", error);
+    }
+    };
+
+
+    return (
     <div className='p-4 w-full'>
         {imagePreview && (
         <div className="mb-3 flex items-center gap-2">
