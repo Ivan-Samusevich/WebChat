@@ -1,4 +1,3 @@
-import React from 'react'
 
 const SignUpPage = () => {
   return (
@@ -6,4 +5,4 @@ const SignUpPage = () => {
   )
 }
 
-export default SignUpPage
+export default SignUpPage;
