@@ -1,12 +1,12 @@
 import { Sequelize, DataTypes, INTEGER } from 'sequelize';
 
-const sequelize = new Sequelize('web_chat', 'root', 'GfHjKm123456', {
+const sequelize = new Sequelize('webchat', 'root', 'GfHjKm123456', {
   host: 'localhost',
   dialect: 'mysql',
 });
 
 const User = sequelize.define('users', {
-    userId:{
+    user_id:{
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
@@ -14,25 +14,26 @@ const User = sequelize.define('users', {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
+      unique: true
     },
     fullName: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        len: [6], // Минимум 6 символов
+        len: [6] // Минимум 6 символов
       },
     },
-    profilePic: {
+    profile_pic: {
       type: DataTypes.STRING,
-      defaultValue: "",
+      defaultValue: ""
     },
-  }, {
-    timestamps: true, // Добавляет createdAt и updatedAt
+  }, 
+  {
+    timestamps: false, // Добавляет createdAt и updatedAt
   });
   
   export default User;

@@ -24,14 +24,14 @@ export const signup = async (req, res) => {
             password, // Пароль сохраняется "как есть" (без хеширования)
         });
 
-        const token = generateToken(newUser.id);
+        const token = generateToken(newUser.id, res);
         res.status(201).json({
             success: true,
             data: {
-                id: newUser.id,
+                user_id: newUser.id,
                 fullName: newUser.fullName,
                 email: newUser.email,
-                profilePic: newUser.profilePic || null,
+                profile_pic: newUser.profilePic || null,
                 token
             }
         });
@@ -41,11 +41,45 @@ export const signup = async (req, res) => {
     }
 };
 
-export const login = (req, res) => {
-    res.send("login route");
+export const login = async (req, res) => {
+    
+    const {email, password} = req.body || {};
+    try {
+        const user = await User.findOne({where : {email}})
+        if(!user)
+        {
+            return res.status(400).json({success: false, message: "Неверные данные"});
+        }
+
+        if(password != user.password)
+        {
+            return res.status(400).json({success: false, message: "Неверный пароль"});
+        }
+
+        const token = generateToken(user.id, res)
+
+        res.status(201).json({
+            success: true,
+            data:{
+                user_id: user.id,
+                fullName: user.fullName,
+                email: user.email,
+                profile_pic: user.profilePic || null,
+                token
+            }
+        })
+    } catch (error) {
+        res.status(500).json({message: "Internal Server Error"})
+    }
 };
 
 export const logout = (req, res) => {
-    res.send("logout route");
+    try {
+        res.cookie("jwt", "", {maxAge:0})
+        res.status(201).json({success: true, message: "Успешный выход"});     
+    } catch (error) {
+        res.status(500).json({success: false, message: "Internal Server Error"});     
+        
+    }
 };
 
