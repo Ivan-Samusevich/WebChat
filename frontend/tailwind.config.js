@@ -11,6 +11,7 @@ export default {
     themes: [
       "light",
       "dark",
+<<<<<<< HEAD
       // "cupcake",
       // "bumblebee",
       // "emerald",
@@ -41,6 +42,8 @@ export default {
       // "dim",
       // "nord",
       // "sunset"
+=======
+>>>>>>> 510f87e432313ed8949c76490d3ebe86d2cf020b
     ],
   },
 };
