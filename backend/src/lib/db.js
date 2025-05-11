@@ -1,11 +1,18 @@
-import mongoose from "mongoose";
+import mysql from "mysql2";
+  
+const connection = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    database: "webchat",
+    password: "GfHjKm123456"
+});
 
 export const connectDB = async () => {
-    try {
-        const conn = await mongoose.connect(process.env.MONGODB_URI);
-        console.log(`MongoDB connected: ${conn.connection.host}`);
-    } catch (error) {
-        console.log("MongoDB error:", error);
-        
-    }
+    connection.connect(function(err){
+        try{
+            console.log("Подключение к серверу MySQL успешно установлено ");
+        }catch(err){
+            return console.error("Ошибка: " + err.message);
+        }
+    });
 };

@@ -1,4 +1,5 @@
-import express from "express";
+import express from 'express'
+
 import authRoutes from "../src/routes/auth_route.js";
 import dotenv from "dotenv"
 import cors from "cors";
@@ -18,15 +19,12 @@ app.use(
     })
 );
 
+app.use(express.json());
+
 app.use("/api/auth", authRoutes)
 
 app.listen(PORT, () => {
     console.log("HI Ivan!!!, port = " + PORT);
-    console.log("HI Ivan!!!, port = " + PORT);
-    console.log("HI Ivan!!!, port = " + PORT);
-    console.log("HI Ivan!!!, port = " + PORT);
-    console.log("HI Ivan!!!, port = " + PORT);
-    console.log("HI Ivan!!!, port = " + PORT);
-    console.log("HI Ivan!!!, port = " + PORT);
+    
     connectDB()
 });
