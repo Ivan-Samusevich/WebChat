@@ -26,6 +26,7 @@ const SignUpPage = () => {
     return true;
   };
 
+  
   const handleSubmit = (e) => {
     e.preventDefault();
 

@@ -7,7 +7,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost5173",
+        origin: "http://localhost:5173",
         methods: ["GET", "POST"],
         credentials: true
     }
@@ -20,7 +20,7 @@ export function getReceiverSocketId(userId){
 const userSocketMap = {};
 
 io.on("connection", (socket) => {
-    console.log("User connection ", socket.id);
+    console.log("User connection в сокетах", socket.id);
 
     const userId = socket.handshake.query.userId
     if(userId) userSocketMap[userId] = socket.id

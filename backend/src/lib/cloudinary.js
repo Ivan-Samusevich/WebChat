@@ -1,10 +1,9 @@
-import cloudinaryPackage from 'cloudinary';
-const cloudinary = cloudinaryPackage.v2;
+import{v2 as cloudinary} from 'cloudinary';
 
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET
+  cloud_name: 'ddidostyl',
+  api_key: '364666935399525',
+  api_secret: '9j5OALy4sxIFXP0vCclCpV26L9Q'
 });
 
 export default cloudinary;

@@ -16,16 +16,16 @@ export const signup = async (req, res) => {
 
         const userExists = await User.findOne({ where: { email } });
         if (userExists) {
-            return res.status(400).json({ success: false, message: "Электронная почта уже существует" });
+            return res.status(400).json({ success: false, message: "Данная почта уже используется другим пользователем!" });
         }
 
         const newUser = await User.create({
             fullName,
             email,
-            password, // Пароль сохраняется "как есть" (без хеширования)
+            password,
         });
 
-        const token = generateToken(newUser.id, res);
+        const token = generateToken(newUser.user_id, res);
         res.status(201).json({
             success: true,
             data: {
@@ -49,14 +49,13 @@ export const login = async (req, res) => {
         const user = await User.findOne({where : {email}})
         if(!user)
         {
-            return res.status(400).json({success: false, message: "Неверные данные"});
+            return res.status(400).json({success: false, message: "Нет пользователя с данной почтой"});
         }
 
         if(password != user.password)
         {
             return res.status(400).json({success: false, message: "Неверный пароль"});
         }
-
         const token = generateToken(user.user_id, res)
 
         res.status(201).json({
@@ -94,9 +93,7 @@ export const updateProfile = async (req, res) => {
 
     const uploadResponce = await cloudinary.uploader.upload(profilePic)
     const updateUser = await User.findByIdAndUpdate(userId, {profilePic:uploadResponce.secure_url}, {new:true})
-
     res.status(200).json(updateUser);
-
     } catch (error) {
         res.status(500).json({success: false, message: "Internal Server Error"});        
     }
@@ -104,7 +101,6 @@ export const updateProfile = async (req, res) => {
 
 export const checkAuth = (req, res) => {
     try {
-        
         res.status(200).json({success: true, message: req.user});
     } catch (error) {
         res.status(500).json({success: false, message: "Internal Server Error"});        
